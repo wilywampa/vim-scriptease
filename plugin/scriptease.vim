@@ -692,10 +692,10 @@ nmap zS <Plug>ScripteaseSynnames
 " }}}1
 " K {{{1
 
-augroup scriptease_help
-  autocmd!
-  autocmd FileType vim nnoremap <silent><buffer> K :exe 'help '.<SID>helptopic()<CR>
-augroup END
+" augroup scriptease_help
+"   autocmd!
+"   autocmd FileType vim nnoremap <silent><buffer> K :exe 'help '.<SID>helptopic()<CR>
+" augroup END
 
 function! s:helptopic()
   let col = col('.') - 1
