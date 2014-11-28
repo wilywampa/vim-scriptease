@@ -320,7 +320,7 @@ endfunction
 function! scriptease#scriptid(filename) abort
   let filename = fnamemodify(expand(a:filename), ':p')
   for script in s:names()
-    if script.filename ==# filename
+    if resolve(script.filename) ==# resolve(filename)
       return +script.text
     endif
   endfor
