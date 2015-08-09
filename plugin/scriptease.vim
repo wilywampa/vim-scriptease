@@ -595,7 +595,7 @@ endfunction
 
 function! s:find(count,cmd,file,lcd)
   let found = s:runtime_globpath(a:file)
-  let file = get(found, a:count - 1, '')
+  let file = resolve(get(found, a:count - 1, ''))
   if file ==# ''
     return "echoerr 'E345: Can''t find file \"".a:file."\" in runtimepath'"
   elseif a:cmd ==# 'read'
