@@ -619,7 +619,7 @@ function! s:find(count,cmd,file,lcd)
       exe a:cmd
     endif
     call setloclist(window, map(found,
-          \ '{"filename": v:val, "text": v:val[0 : -len(a:file)-2]}'))
+          \ '{"filename": resolve(v:val), "text": v:val[0 : -len(a:file)-2]}'))
     return precmd . 'll'.matchstr(a:cmd, '!$').' '.a:count . postcmd
   endif
 endfunction
