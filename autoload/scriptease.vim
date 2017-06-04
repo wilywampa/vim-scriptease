@@ -277,7 +277,7 @@ endfunction
 function! scriptease#scriptid(filename) abort
   let filename = fnamemodify(expand(a:filename), ':p')
   for script in s:names()
-    if script.filename ==# filename
+    if resolve(script.filename) ==# resolve(filename)
       return +script.text
     endif
   endfor
@@ -617,7 +617,7 @@ endfunction
 
 function! scriptease#open_command(count,cmd,file,lcd) abort
   let found = s:runtime_globpath(a:file)
-  let file = get(found, a:count - 1, '')
+  let file = resolve(get(found, a:count - 1, ''))
   if file ==# ''
     return "echoerr 'E345: Can''t find file \"".a:file."\" in runtimepath'"
   elseif a:cmd ==# 'read'
@@ -641,7 +641,7 @@ function! scriptease#open_command(count,cmd,file,lcd) abort
       exe a:cmd
     endif
     call setloclist(window, map(found,
-          \ '{"filename": v:val, "text": v:val[0 : -len(a:file)-2]}'))
+          \ '{"filename": resolve(v:val), "text": v:val[0 : -len(a:file)-2]}'))
     return precmd . 'll'.matchstr(a:cmd, '!$').' '.a:count . postcmd
   endif
 endfunction
@@ -763,9 +763,9 @@ function! scriptease#setup_vim() abort
         \ :exe s:break('del',<q-args>)
 
   nnoremap <silent><buffer> <Plug>ScripteaseHelp :<C-U>exe 'help '.scriptease#helptopic()<CR>
-  if empty(mapcheck('K', 'n'))
-    nmap <silent><buffer> K <Plug>ScripteaseHelp
-  endif
+  " if empty(mapcheck('K', 'n'))
+  "   nmap <silent><buffer> K <Plug>ScripteaseHelp
+  " endif
 endfunction
 
 function! scriptease#setup_help() abort
